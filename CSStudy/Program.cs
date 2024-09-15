@@ -12,10 +12,11 @@ namespace CSStudy
     {
         static void Main(string[] args)
         {
-            int playerHealth = 1000;
-            int playerDamage = 5;
-            int enemyHealth = 1000;
-            int enemyDamage = 5;
+            Random random = new Random();
+            int playerHealth = 10;
+            int playerDamage = random.Next(5, 10);
+            int enemyHealth = random.Next(10, 30);
+            int enemyDamage = playerDamage - random.Next(0, 4);
 
             Console.WriteLine("Здоровье перед боем:");
             Console.WriteLine($"Игрок - {playerHealth}.");
@@ -23,7 +24,15 @@ namespace CSStudy
 
             while (playerHealth > 0 && enemyHealth > 0)
             {
-                playerHealth -= enemyDamage;
+                if (random.Next(0, 2) == 1)
+                {
+                    playerHealth -= enemyDamage;
+                }
+                else
+                {
+                    Console.WriteLine("Уворот игрока!");
+                }
+
                 enemyHealth -= playerDamage;
             }
 
