@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,23 +12,37 @@ namespace CSStudy
     {
         static void Main(string[] args)
         {
-            float money;
-            int years;
-            int percent = 1;
+            int playerHealth = 1000;
+            int playerDamage = 5;
+            int enemyHealth = 1000;
+            int enemyDamage = 5;
 
-            Console.Write("Введите кол-во денег на вкладе: ");
-            money = Convert.ToSingle(Console.ReadLine());
-            Console.Write("Кол-во лет: ");
-            years = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine($"Ваш вклад будет открыт под {percent}% годовых.");
+            Console.WriteLine("Здоровье перед боем:");
+            Console.WriteLine($"Игрок - {playerHealth}.");
+            Console.WriteLine($"Противник - {enemyHealth}.");
 
-            for (int i = 0; i < years; i++)
+            while (playerHealth > 0 && enemyHealth > 0)
             {
-                money += money / 100 * percent;
-                Console.WriteLine($"В этом году ваш баланс: {money}.");
-                Console.ReadKey();
-
+                playerHealth -= enemyDamage;
+                enemyHealth -= playerDamage;
             }
+
+            Console.WriteLine($"Оставшееся здоровье игрока: {playerHealth}.");
+            Console.WriteLine($"Оставшееся здоровье противника: {enemyHealth}.");
+
+            if (playerHealth <= 0 && enemyHealth <= 0)
+            {
+                Console.WriteLine("Ничья.");
+            }
+            else if (enemyHealth <= 0)
+            {
+                Console.WriteLine("Победа игрока.");
+            }
+            else if (playerHealth <= 0)
+            {
+                Console.WriteLine("Победа противника.");
+            }
+
         }
     }
 }
