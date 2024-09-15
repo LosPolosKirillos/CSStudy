@@ -11,24 +11,22 @@ namespace CSStudy
     {
         static void Main(string[] args)
         {
-            int triesCount = 5;
-            string password = "1234";
-            string userInput;
+            float money;
+            int years;
+            int percent = 1;
 
-            for (int i = 0; i < triesCount; i++)
+            Console.Write("Введите кол-во денег на вкладе: ");
+            money = Convert.ToSingle(Console.ReadLine());
+            Console.Write("Кол-во лет: ");
+            years = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine($"Ваш вклад будет открыт под {percent}% годовых.");
+
+            for (int i = 0; i < years; i++)
             {
-                Console.Write("Введите неверный пароль:");
-                userInput = Console.ReadLine();
-                if (userInput != password)
-                {
-                    Console.WriteLine("Мужиик");
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Введён верный пароль!");
-                    Console.WriteLine("У вас осталось попыток: " + (triesCount - i - 1) + ".");
-                }
+                money += money / 100 * percent;
+                Console.WriteLine($"В этом году ваш баланс: {money}.");
+                Console.ReadKey();
+
             }
         }
     }
