@@ -12,46 +12,38 @@ namespace CSStudy
     {
         static void Main(string[] args)
         {
-            Random random = new Random();
-            int playerHealth = 10;
-            int playerDamage = random.Next(5, 10);
-            int enemyHealth = random.Next(10, 30);
-            int enemyDamage = playerDamage - random.Next(0, 4);
+            int number;
+            int lower, higher;
+            int triesCount = 5;
+            int userInput;
+            Random rand = new Random();
 
-            Console.WriteLine("Здоровье перед боем:");
-            Console.WriteLine($"Игрок - {playerHealth}.");
-            Console.WriteLine($"Противник - {enemyHealth}.");
+            number = rand.Next(0, 100);
+            lower = rand.Next(number - 10, number);
+            higher = rand.Next(number + 1, number + 10);
 
-            while (playerHealth > 0 && enemyHealth > 0)
+            Console.WriteLine($"Я загадал число от 0 до 100, оно больше чем {lower}, " +
+                $"но меньше чем {higher}.");
+            Console.WriteLine($"Что это за число? Кол-во попыток: {triesCount}.");
+
+            while (triesCount-- > 0)
             {
-                if (random.Next(0, 2) == 1)
+                Console.Write("Твой ответ: ");
+                userInput = Convert.ToInt32(Console.ReadLine());
+                if (userInput == number)
                 {
-                    playerHealth -= enemyDamage;
+                    Console.WriteLine($"Вы правы, это было число {number}.");
+                    break;
                 }
                 else
                 {
-                    Console.WriteLine("Уворот игрока!");
+                    Console.WriteLine("Неверно, попробуйте еще раз.");
                 }
-
-                enemyHealth -= playerDamage;
             }
-
-            Console.WriteLine($"Оставшееся здоровье игрока: {playerHealth}.");
-            Console.WriteLine($"Оставшееся здоровье противника: {enemyHealth}.");
-
-            if (playerHealth <= 0 && enemyHealth <= 0)
+            if (triesCount < 0)
             {
-                Console.WriteLine("Ничья.");
+                Console.WriteLine($"Вы проиграли, увы, но повезёт в следующий раз. Это было число {number}.");
             }
-            else if (enemyHealth <= 0)
-            {
-                Console.WriteLine("Победа игрока.");
-            }
-            else if (playerHealth <= 0)
-            {
-                Console.WriteLine("Победа противника.");
-            }
-
         }
     }
 }
