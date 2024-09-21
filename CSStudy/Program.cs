@@ -12,51 +12,24 @@ namespace CSStudy
     {
         static void Main(string[] args)
         {
-            Random random = new Random();
-            float health1 = random.Next(90, 110);
-            int damage1 = random.Next(7, 35);
-            int armor1 = random.Next(45, 100);
+            int[] array = { 2, 3, 4, 7, 8, -4, 25, 14 };
+            int maxElement = int.MinValue;
+            int minElement = int.MaxValue;
 
-            float health2 = random.Next(80, 120);
-            int damage2 = random.Next(5, 40);
-            int armor2 = random.Next(65, 100);
-
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.SetCursorPosition(0, 1);
-            Console.WriteLine($"Гладиатор 1 - {health1} здоровья, {damage1} наносимый урон, {armor1} броня.");
-            Console.SetCursorPosition(0, 3);
-            Console.ForegroundColor= ConsoleColor.Red;
-            Console.WriteLine($"Гладиатор 2 - {health2} здоровья, {damage2} наносимый урон, {armor2} броня.");
-
-            Console.SetCursorPosition(0, 5);
-            Console.ForegroundColor = ConsoleColor.Black;
-            while (health1 > 0 && health2 > 0)
+            for (int i = 0; i < array.Length; i++)
             {
-                health1 -= Convert.ToSingle(random.Next(0, damage2 + 1)) / 100 * armor1;
-                health2 -= Convert.ToSingle(random.Next(0, damage1 + 1)) / 100 * armor2;
-
-                Console.WriteLine($"Здоровье гладиатора 1: {health1}");
-                Console.WriteLine($"Здоровье гладиатора 2: {health2}");
+                if (array[i] > maxElement)
+                {
+                    maxElement = array[i];
+                }
+                if (array[i] < minElement)
+                {
+                    minElement = array[i];
+                }
             }
 
-            if (health1 <= 0 && health2 <= 0)
-            {
-                Console.WriteLine("Ничья, \nоба гладиатора погибли.");
-            }
-            else if (health1 <= 0)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Гладиатор 1\n - пал.");
-                Console.ForegroundColor = ConsoleColor.Black;
-            }
-            else if (health2 <= 0)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Гладиатор 2\n - пал.");
-                Console.ForegroundColor = ConsoleColor.Black;
-            }
+            Console.WriteLine(maxElement);
+            Console.WriteLine(minElement);
         }
     }
 }
