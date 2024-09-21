@@ -12,24 +12,63 @@ namespace CSStudy
     {
         static void Main(string[] args)
         {
-            int[] array = { 2, 3, 4, 7, 8, -4, 25, 14 };
-            int maxElement = int.MinValue;
-            int minElement = int.MaxValue;
-
-            for (int i = 0; i < array.Length; i++)
+            Random random = new Random();
+            int[] sectors = new int[random.Next(2, 5)];
+            for (int i = 0; i < sectors.Length; i++)
             {
-                if (array[i] > maxElement)
-                {
-                    maxElement = array[i];
-                }
-                if (array[i] < minElement)
-                {
-                    minElement = array[i];
-                }
+                sectors[i] = random.Next(5, 20);
             }
 
-            Console.WriteLine(maxElement);
-            Console.WriteLine(minElement);
+            bool isOpen = true;
+
+            while (isOpen)
+            {
+                Console.SetCursorPosition(0, 18);
+                for (int i = 0; i < sectors.Length; i++)
+                {
+                    Console.WriteLine($"В секторе {i + 1} свободно {sectors[i]} мест.");
+                }
+
+                Console.SetCursorPosition(0, 0);
+                Console.WriteLine("Регистрация рейса.");
+                Console.WriteLine("\n\n1 - забронировать места\n\n2 - выход из программы.\n\n");
+                Console.Write("Введите номер команды: ");
+                switch (Convert.ToInt32(Console.ReadLine()))
+                {
+                    case 1:
+                        int userSector, userPlaceAmount;
+                        Console.Write("В каком секторе вы хотите лететь? ");
+                        userSector = Convert.ToInt32(Console.ReadLine()) - 1;
+                        if (sectors.Length <= userSector || userSector < 0)
+                        {
+                            Console.WriteLine("Такого сектора не существует.");
+                            break;
+                        }
+                        Console.Write("Сколько мест вы хотите забронировать? ");
+                        userPlaceAmount = Convert.ToInt32(Console.ReadLine());
+                        if (userPlaceAmount < 0)
+                        {
+                            Console.WriteLine("Неверное количество мест.");
+                            break;
+                        }
+                        if (sectors[userSector] < userPlaceAmount)
+                        {
+                            Console.WriteLine($"В секторе {userSector} недостаточно мест. " +
+                                $"Остаток {sectors[userSector]}");
+                            break;
+                        }
+
+                        sectors[userSector] -= userPlaceAmount;
+                        Console.WriteLine("Бронирование успешно!");
+                        break;
+                    case 2:
+                        isOpen = false;
+                        break;
+                }
+
+                Console.ReadKey();
+                Console.Clear();
+            }
         }
     }
 }
