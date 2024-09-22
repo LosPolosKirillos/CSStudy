@@ -12,39 +12,24 @@ namespace CSStudy
     {
         static void Main(string[] args)
         {
-            bool isOpen = true;
-            string word = "";
-            string userInput;
-            
-            while (isOpen)
+            int[,] array = new int[15, 2];
+            int[,] array1 = new int[2, 2]
             {
-                Console.WriteLine("Поприветствуй меня!");
-                userInput = Console.ReadLine();
+                { 9, 2 },
+                { 2, 2 },
+            };
 
-                for (int i = 0; i < userInput.Length; i++)
+            Random random = new Random();
+
+            for (int i = 0; i < array1.GetLength(0); i++)
+            {
+                for (int j = 0; j < array1.GetLength(1); j++)
                 {
-                    if (userInput[i] == ' ' || userInput[i] == ',' || (userInput.Length - 1 == i && userInput[userInput.Length - 1] == 'т'))
-                    {
-                        if (userInput[i] != ' ' && userInput[i] != ',')
-                        {
-                            word += userInput[i];
-                        }
-
-                        if ((word[0] == 'П' || word[0] == 'п') && word[word.Length - 1] == 'т')
-                        {
-                            Console.WriteLine("Привет!");
-                            isOpen = false;
-                            break;
-                        }
-
-                        word = "";
-                    }
-                    else
-                    {
-                        word += userInput[i];
-                    }
-
+                    array1[i, j] = random.Next(0, 10);
+                    Console.Write(array1[i, j]);
                 }
+                Console.WriteLine();
+                Console.WriteLine(array[0, 0]);
             }
         }
     }
