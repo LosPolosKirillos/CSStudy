@@ -14,26 +14,25 @@ namespace CSStudy
     {
         static void Main(string[] args)
         {
-            int[] petrovich = new int[3];
-            int[] ivanovich = new int[5];
-            int[] sidorovich;
+            int[] bag = new int[1];
+            bag[0] = 12;
+            int[] tempBag = new int[bag.Length + 1];
+            for (int i = 0; i < bag.Length; i++)
+            {
+                tempBag[i] = bag[i];
+                Console.WriteLine(bag[i] + "Первый");
+            }
 
-            petrovich = ivanovich;
+            Console.WriteLine();
 
-            petrovich[0] = 5;
-            petrovich[1] = 3;
+            tempBag[tempBag.Length - 1] = 56;
 
-            sidorovich = petrovich;
+            bag = tempBag;
 
-            sidorovich[2] = 7;
-            sidorovich[0] = 10;
-
-            Console.WriteLine(ivanovich[0]);
-            Console.WriteLine(ivanovich[1]);
-
-            petrovich = new int[10];
-
-            Console.WriteLine(petrovich[0]);
+            for (int i = 0;i < bag.Length; i++)
+            {
+                Console.WriteLine(bag[i] + "Второй");
+            }
         }
     }
 }
