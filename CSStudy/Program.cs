@@ -15,153 +15,127 @@ namespace CSStudy
     {
         static void Main(string[] args)
         {
-            Console.CursorVisible = false;
             Random random = new Random();
-            char[,] map =
-            {
-                {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
-                {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-                {'#', ' ', 'X', ' ', '#', ' ', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-                {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-                {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-                {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-                {'#', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-                {'#', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-                {'#', '#', ' ', ' ', ' ', ' ', ' ', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-                {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-                {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-                {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-                {'#', ' ', 'X', ' ', '#', ' ', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-                {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-                {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-                {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
+            string[,] cells = new string[3, 3] {
+                { "-", "-", "-" },
+                { "-", "-", "-" },
+                { "-", "-", "-" }
             };
+            int line = -1, column = -1;
 
-            int userX = 5, userY = 5;
-            char[] bag = new char[1];
-            int[] enemies = { random.Next(1, map.GetLength(0) - 1), random.Next(10, map.GetLength(1) - 4) };
-            int enemyMoveBorder = 0;
-            bool gameOn = true;
-
-            while (gameOn)
+            while (true)
             {
-                Console.SetCursorPosition(0, 20);
-                Console.Write("Сумка: ");
-                for (int i = 0; i < bag.Length; i++)
-                {
-                    Console.Write(bag[i] + " ");
-                }
+                drawBoard(cells);
 
-                Console.SetCursorPosition(0, 0);
-                for (int i = 0; i < map.GetLength(0); i++)
+                line = -1;
+                column = -1;
+
+                while ((line != 0 && line != 1 && line != 2) || (column != 0 && column != 1 && column != 2))
                 {
-                    for (int j = 0; j < map.GetLength(1); j++)
+                    Console.Write("Введите номер строки: ");
+                    switch (Console.ReadLine())
                     {
-                        Console.Write(map[i, j]);
-                    }
-                    Console.WriteLine();
-                }
-
-                for (int i = 0; i < enemies.Length; i++)
-                {
-                    int y = enemies[i];
-                    int x = enemies[i + 1];
-                    Console.SetCursorPosition(x, y);
-                    Console.Write('*');
-                    i++;
-                }
-
-                Console.SetCursorPosition(userX, userY);
-                Console.Write('@');
-                ConsoleKeyInfo charkey = Console.ReadKey();
-                switch (charkey.Key)
-                {
-                    case ConsoleKey.UpArrow:
-                        if (map[userY - 1, userX] != '#')
-                        {
-                            userY--;
-                        }
-                        break;
-                    case ConsoleKey.DownArrow:
-                        if (map[userY + 1, userX] != '#')
-                        {
-                            userY++;
-                        }
-                        break;
-                    case ConsoleKey.LeftArrow:
-                        if (map[userY, userX - 1] != '#')
-                        {
-                            userX--;
-                        }
-                        break;
-                    case ConsoleKey.RightArrow:
-                        if (map[userY, userX + 1] != '#')
-                        {
-                            userX++;
-                        }
-                        break;
-                }
-
-                if (enemyMoveBorder == 6)
-                {
-                    enemyMoveBorder = 0;
-                }
-
-                for (int i = 0; i < enemies.Length; i++)
-                {
-                    if (enemies[i] == userY && enemies[i + 1] == userX)
-                    {
-                        gameOn = false;
-                        break;
-                    }
-
-                    switch (enemyMoveBorder)
-                    {
-                        case 0:
-                        case 1:
-                        case 2:
-                            enemies[i + 1]++;
+                        case "1":
+                            line = 0;
                             break;
-                        case 3:
-                        case 4:
-                        case 5:
-                            enemies[i + 1]--;
+                        case "2":
+                            line = 1;
+                            break;
+                        case "3":
+                            line = 2;
+                            break;
+                        default:
+                            Console.WriteLine("Неверный индекс.");
+                            break;
+
+                    }
+                    Console.Write("Введите номер столбца: ");
+                    switch (Console.ReadLine())
+                    {
+                        case "1":
+                            column = 0;
+                            break;
+                        case "2":
+                            column = 1;
+                            break;
+                        case "3":
+                            column = 2;
+                            break;
+                        default:
+                            Console.WriteLine("Неверный индекс.");
                             break;
                     }
-                    i++;
                 }
-
-                if (gameOn == false)
+                if (cells[line, column] == "-")
                 {
-                    Console.SetCursorPosition(0, 17);
-                    Console.Write("GAME OVER! ");
-                    break;
+                    cells[line, column] = "x";
+
+                    if (checkVictory(cells))
+                    {
+                        Console.Clear();
+                        drawBoard(cells);
+                        Console.WriteLine("Победа игрока!");
+                        break;
+                    }
+
+                    while (true)
+                    {
+                        line = random.Next(0, 3);
+                        column = random.Next(0, 3);
+                        if (cells[line, column] == "-")
+                        {
+                            cells[line, column] = "o";
+                            break;
+                        }
+                    }
+
+                    if (checkVictory(cells, "o"))
+                    {
+                        Console.Clear();
+                        drawBoard(cells);
+                        Console.WriteLine("Победа рандома!");
+                        break;
+                    }
                 }
-
-                enemyMoveBorder++;
-
-                if (map[userY, userX] == 'X')
+                else
                 {
-                    map[userY, userX] = 'o';
-                    char[] tempBag = new char[bag.Length + 1];
-                    for (int i = 0; i < bag.Length; i++)
-                    {
-                        tempBag[i] = bag[i];
-                    }
-                    tempBag[tempBag.Length - 1] = 'X';
-                    bag = tempBag;
-
-                    int[] tempEnemies = new int[enemies.Length + 2];
-                    for (int i = 0; i < enemies.Length;i++)
-                    {
-                        tempEnemies[i] = enemies[i];
-                    }
-                    tempEnemies[tempEnemies.Length - 2] = random.Next(1, map.GetLength(0) - 1);
-                    tempEnemies[tempEnemies.Length - 1] = random.Next(10, map.GetLength(1) - 4);
-                    enemies = tempEnemies;
+                    Console.WriteLine("Эта ячейка занята!");
                 }
+            }
+        }
 
-                Console.Clear();
+        static bool checkVictory(string[,] board, string symbol = "x")
+        {
+            if (board[0, 0] == symbol && board[0, 1] == symbol && board[0, 2] == symbol) { return true; }
+            else if (board[1, 0] == symbol && board[1, 1] == symbol && board[1, 2] == symbol) { return true; }
+            else if (board[2, 0] == symbol && board[2, 1] == symbol && board[2, 2] == symbol) { return true; }
+            else if (board[0, 0] == symbol && board[1, 0] == symbol && board[2, 0] == symbol) { return true; }
+            else if (board[0, 1] == symbol && board[1, 1] == symbol && board[2, 1] == symbol) { return true; }
+            else if (board[0, 2] == symbol && board[1, 2] == symbol && board[2, 2] == symbol) { return true; }
+            else if (board[0, 0] == symbol && board[1, 1] == symbol && board[2, 2] == symbol) { return true; }
+            else if (board[0, 2] == symbol && board[1, 1] == symbol && board[2, 0] == symbol) { return true; }
+            else { return false; }
+        }
+
+        static void drawBoard(string[,] board)
+        {
+            for (int i = 0; i < board.GetLength(0); i++)
+            {
+                for (int j = 0; j < board.GetLength(1); j++)
+                {
+                    if (j < board.GetLength(1) - 1)
+                    {
+                        Console.Write(board[i, j] + " | ");
+                    }
+                    else
+                    {
+                        Console.Write(board[i, j] + "\n");
+                    }
+                }
+                if (i < board.GetLength(0) - 1)
+                {
+                    Console.WriteLine("--  --  --");
+                }
             }
         }
     }
