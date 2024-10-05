@@ -15,17 +15,16 @@ namespace CSStudy
     {
         static void Main(string[] args)
         {
-            int value;
+            int[] group = { 1, 2, 3 };
 
-            minusValue(out value);
-            Console.WriteLine(value);
+            group = minusValue(group, 1, 4);
+            Console.WriteLine(group[1]);
         }
 
-        static int minusValue(out int arg)
+        static int[] minusValue(int[] list, int index, int value = 2)
         {
-            arg = 0;
-            arg -= 3;
-            return arg;
+            list[index] -= value;
+            return list;
         }
     }
 }
