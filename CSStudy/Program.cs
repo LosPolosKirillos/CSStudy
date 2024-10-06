@@ -15,26 +15,48 @@ namespace CSStudy
     {
         static void Main(string[] args)
         {
-            int value = 0;
-            string line = "Hello ";
-            Add(ref value, 10);
-            Add(ref line, 5);
-            Console.WriteLine($"{value}, {line}");
-        }
+            int health = 10, maxHealth = 10, mana = 4, maxMana = 10;
 
-        static void Add(ref int value, int amount)
-        {
-            value += amount;
-        }
-
-        static void Add(ref string line, int amount)
-        {
-            string lineToAdd = "";
-            for (int i = 0; i < amount; i++)
+            while (true)
             {
-                lineToAdd += "_";
+                DrawBar(health, maxHealth, ConsoleColor.Green, 2, '|');
+                DrawBar(mana, maxMana, ConsoleColor.Blue, 3);
+
+                Console.SetCursorPosition(0, 6);
+                Console.Write("Введите значение, на которое хотите изменить шкалу жизни: ");
+                health += Convert.ToInt32(Console.ReadLine());
+                Console.Write("Введите значение, на которое хотите изменить шкалу маны: ");
+                mana += Convert.ToInt32(Console.ReadLine());
+
+                Console.Clear();
             }
-            line += lineToAdd;
+        }
+
+        static void DrawBar(int value, int maxValue, ConsoleColor color, int position, char symbol = '_')
+        {
+            ConsoleColor defaultColor = Console.BackgroundColor;
+
+            string bar = "";
+
+            for (int i = 0; i < value; i++)
+            {
+                bar += symbol;
+            }
+
+            Console.SetCursorPosition(0, position);
+            Console.Write('[');
+            Console.BackgroundColor = color;
+            Console.Write(bar);
+            Console.BackgroundColor = defaultColor;
+
+            bar = "";
+
+            for (int i = 0;i < maxValue-value; i++)
+            {
+                bar += symbol;
+            }
+
+            Console.Write(bar + ']');
         }
     }
 }
