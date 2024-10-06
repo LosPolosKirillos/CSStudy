@@ -15,41 +15,26 @@ namespace CSStudy
     {
         static void Main(string[] args)
         {
-            int[] array1 = new int[5];
-            int[,] array2 = new int[5, 5];
-            array1 = Resize(array1, 6);
-            array2 = Resize(array2, 10, 10);
-            Console.WriteLine(array1.Length);
-            Console.WriteLine(array2.Length);
+            int value = 0;
+            string line = "Hello ";
+            Add(ref value, 10);
+            Add(ref line, 5);
+            Console.WriteLine($"{value}, {line}");
         }
 
-        static int[] Resize(int[] array, int length)
+        static void Add(ref int value, int amount)
         {
-            int[] tempArray = new int[length];
-
-            for (int i = 0; i < array.Length; i++)
-            {
-                tempArray[i] = array[i];
-            }
-
-            array = tempArray;
-            return array;
+            value += amount;
         }
 
-        static int[,] Resize(int[,] array, int x, int y)
+        static void Add(ref string line, int amount)
         {
-            int[,] tempArray = new int[x, y];
-
-            for (int i = 0; i < array.GetLength(0); i++)
+            string lineToAdd = "";
+            for (int i = 0; i < amount; i++)
             {
-                for (int j = 0; j < array.GetLength(1); j++)
-                {
-                    tempArray[i, j] = array[i, j];
-                }
+                lineToAdd += "_";
             }
-
-            array = tempArray;
-            return array;
+            line += lineToAdd;
         }
     }
 }
